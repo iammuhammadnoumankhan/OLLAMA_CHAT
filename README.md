@@ -1,11 +1,7 @@
-Here's a comprehensive README.md for your GitHub repository:
-
 ```markdown
-# Ollama AI Assistant
+# OLLAMA CHAT
 
 A ChatGPT-like AI Assistant powered by Ollama, built with FastAPI backend and Streamlit frontend.
-
-![Alt text](samples/sample1.png)
 
 
 ## Features
@@ -22,16 +18,18 @@ A ChatGPT-like AI Assistant powered by Ollama, built with FastAPI backend and St
 ## Prerequisites
 
 - Python >= 3.10
-- [Ollama](https://ollama.ai/) installed and running
+- [Ollama](https://ollama.com/) installed and running
 - At least one Ollama model pulled (e.g., `llama3.2:latest`)
 
 ## Installation
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/your-username/ollama-ai-assistant.git
-cd ollama-ai-assistant
+git clone https://github.com/iammuhammadnoumankhan/OLLAMA_CHAT.git
+cd OLLAMA_CHAT
 ```
+### Sample
+![Alt text](samples/sample1.png)
 
 2. **Set up backend**
 ```bash
@@ -137,5 +135,6 @@ Contributions are welcome! Please follow these steps:
 
 ## License
 
-MIT License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
 
