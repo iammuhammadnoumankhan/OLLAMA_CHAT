@@ -1,8 +1,8 @@
-```markdown
 # OLLAMA CHAT
 
-A ChatGPT-like AI Assistant powered by Ollama, built with FastAPI backend and Streamlit frontend.
+```markdown
 
+A ChatGPT-like AI Assistant powered by Ollama, built with FastAPI backend and Streamlit frontend.
 
 ## Features
 
@@ -28,8 +28,9 @@ A ChatGPT-like AI Assistant powered by Ollama, built with FastAPI backend and St
 git clone https://github.com/iammuhammadnoumankhan/OLLAMA_CHAT.git
 cd OLLAMA_CHAT
 ```
-### Sample
-![Alt text](samples/sample1.png)
+
+### Sample Image
+![Chat Interface](samples/sample1.png)
 
 2. **Set up backend**
 ```bash
@@ -66,7 +67,7 @@ Create `.env` files:
 ```env
 OLLAMA_HOST=http://localhost:11434
 ```
-or any other url if your ollama is running on a different machine in your network: eg: `http://x.x.x.x:11434`
+or any other URL if your Ollama is running on a different machine in your network, e.g., `http://x.x.x.x:11434`
 
 **frontend/.env**
 ```env
@@ -88,13 +89,13 @@ streamlit run app.py
 ```
 
 3. **Access the Application**
-- Frontend: http://localhost:8501
-- Backend API: http://localhost:8000
-- Ollama: http://localhost:11434
+- Frontend: [http://localhost:8501](http://localhost:8501)
+- Backend API: [http://localhost:8000](http://localhost:8000)
+- Ollama: [http://localhost:11434](http://localhost:11434)
 
 ## Tech Stack
 
-- **Backend**: 
+- **Backend**:
   - Python FastAPI
   - Ollama Python Client
   - CORS Middleware
@@ -110,7 +111,7 @@ streamlit run app.py
 **Common Issues**:
 1. **Ollama not running**:
    - Verify `ollama serve` is running
-   - Check OLLAMA_HOST in backend/.env
+   - Check `OLLAMA_HOST` in `backend/.env`
 
 2. **Model not found**:
    - Pull the model: `ollama pull <model-name>`
@@ -136,5 +137,4 @@ Contributions are welcome! Please follow these steps:
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-
+```
