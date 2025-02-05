@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 import re
 import time
+from codecs import getincrementaldecoder
 
 load_dotenv()
 
@@ -124,38 +125,47 @@ def main():
                 if streaming:
                     response_container = st.empty()
                     full_response = ""
-                    buffer = ""
-                    
-                    for chunk in chat_completion(
+                    text_buffer = ""
+                    decoder = getincrementaldecoder('utf-8')()
+
+                    response = chat_completion(
                         st.session_state.messages, 
                         stream=True
-                    ).iter_content():
-                        chunk_str = chunk.decode() if isinstance(chunk, bytes) else chunk
-                        buffer += chunk_str
-                        
+                    )
+                    
+                    for chunk in response.iter_content(chunk_size=1024):
+                        # Decode the chunk using incremental decoder
+                        text_chunk = decoder.decode(chunk)
+                        text_buffer += text_chunk
+
                         # Process thinking blocks incrementally
                         while True:
-                            start = buffer.find('<think>')
-                            end = buffer.find('</think>')
+                            start = text_buffer.find('<think>')
+                            end = text_buffer.find('</think>')
                             
                             if start != -1 and end != -1:
-                                think_content = buffer[start+7:end]
+                                think_content = text_buffer[start+7:end]
                                 st.markdown(
                                     THINKING_STYLE.format(think_content), 
                                     unsafe_allow_html=True
                                 )
-                                buffer = buffer[end+8:]
+                                text_buffer = text_buffer[end+8:]
                             else:
                                 break
-                        
+
                         # Display remaining content as stream
-                        if buffer:
-                            response_container.markdown(buffer + "▌")
+                        if text_buffer:
+                            response_container.markdown(text_buffer + "▌")
+
+                    # Process final chunk
+                    text_buffer += decoder.decode(b'', final=True)
+                    if text_buffer:
+                        response_container.markdown(text_buffer)
+                        full_response += text_buffer
                     
-                    # Display final content
-                    if buffer:
-                        response_container.markdown(buffer)
-                        full_response += buffer
+                    st.session_state.messages.append(
+                        {"role": "assistant", "content": full_response}
+                    )
                     
                 else:
                     response = chat_completion(
