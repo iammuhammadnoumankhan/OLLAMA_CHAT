@@ -1,16 +1,17 @@
 # OLLAMA CHAT
 
-```markdown
-
 A ChatGPT-like AI Assistant powered by Ollama, built with FastAPI backend and Streamlit frontend.
 
 ## Features
 
 - 🚀 Separate backend (FastAPI) and frontend (Streamlit) architecture
-- 💬 ChatGPT-like chat interface
+- 💬 ChatGPT-like chat interface with document context
 - ⚡ Real-time streaming responses
-- 🤖 Multiple Ollama model support
-- ⚙️ Sidebar configuration panel
+- 🤖 Multiple Ollama model support (chat & embeddings)
+- 📁 Document upload support (PDF, TXT, CSV, DOCX)
+- 🔍 Context-aware answers using document content
+- 📚 Multiple document processing
+- ⚙️ Sidebar configuration panel with model selection
 - 🔄 Session persistence
 - 🌐 CORS-enabled API
 - 🔌 Environment configuration support
@@ -20,6 +21,7 @@ A ChatGPT-like AI Assistant powered by Ollama, built with FastAPI backend and St
 - Python >= 3.10
 - [Ollama](https://ollama.com/) installed and running
 - At least one Ollama model pulled (e.g., `llama3.2:latest`)
+- Recommended embedding model: `nomic-embed-text:latest`
 
 ## Installation
 
@@ -48,6 +50,11 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+4. **Install document processing dependencies**
+```bash
+pip install pdfplumber docx2txt langchain-community
+```
+
 ## Configuration
 
 1. **Ollama Setup**
@@ -55,8 +62,9 @@ pip install -r requirements.txt
 # Start Ollama service (in separate terminal)
 ollama serve
 
-# Pull a model (example)
+# Pull models (examples)
 ollama pull llama3.2:latest
+ollama pull nomic-embed-text:latest
 ```
 
 2. **Environment Variables**
@@ -67,11 +75,11 @@ Create `.env` files:
 ```env
 OLLAMA_HOST=http://localhost:11434
 ```
-or any other URL if your Ollama is running on a different machine in your network, e.g., `http://x.x.x.x:11434`
 
 **frontend/.env**
 ```env
 BACKEND_URL=http://localhost:8000
+OLLAMA_HOST=http://localhost:11434
 ```
 
 ## Usage
@@ -88,7 +96,13 @@ cd frontend
 streamlit run app.py
 ```
 
-3. **Access the Application**
+3. **Using the Application**
+- Upload documents via sidebar (200MB/file limit)
+- Select chat and embedding models from dropdown
+- Chat normally or ask questions about documents
+- Toggle streaming responses
+
+4. **Access Points**
 - Frontend: [http://localhost:8501](http://localhost:8501)
 - Backend API: [http://localhost:8000](http://localhost:8000)
 - Ollama: [http://localhost:11434](http://localhost:11434)
@@ -102,28 +116,32 @@ streamlit run app.py
 - **Frontend**:
   - Streamlit
   - Requests
+  - LangChain (document processing)
 - **AI**:
-  - Ollama
-  - Supported LLMs (Llama3, Deepseek, Qwen, etc.)
+  - Ollama LLMs
+  - Ollama Embeddings
+  - Document loaders (PDF, CSV, DOCX, TXT)
 
 ## Troubleshooting
 
 **Common Issues**:
-1. **Ollama not running**:
-   - Verify `ollama serve` is running
-   - Check `OLLAMA_HOST` in `backend/.env`
+1. **Document processing errors**:
+   - Verify file size < 200MB
+   - Check supported file formats
+   - Ensure required dependencies are installed
 
-2. **Model not found**:
+2. **Embedding model issues**:
+   - Pull embedding model: `ollama pull nomic-embed-text`
+   - Check embedding model selection in sidebar
+
+3. **Ollama connection issues**:
+   - Verify `ollama serve` is running
+   - Check `OLLAMA_HOST` in `.env` files
+   - Test connection: `curl http://localhost:11434/api/tags`
+
+4. **Model not found**:
    - Pull the model: `ollama pull <model-name>`
    - Refresh model list in frontend
-
-3. **CORS Errors**:
-   - Ensure backend CORS middleware is configured
-   - Verify frontend/backend URLs match
-
-4. **Streaming issues**:
-   - Check network connectivity
-   - Verify streaming toggle is enabled
 
 ## Contributing
 
@@ -138,3 +156,13 @@ Contributions are welcome! Please follow these steps:
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 ```
+
+Key changes made:
+1. Added document-related features to Features section
+2. Added embedding model requirements
+3. Added document processing dependencies installation step
+4. Updated configuration instructions for embedding models
+5. Added usage instructions for document uploads
+6. Enhanced troubleshooting section with document-related issues
+7. Updated tech stack with document processing components
+8. Added note about file size limits and supported formats

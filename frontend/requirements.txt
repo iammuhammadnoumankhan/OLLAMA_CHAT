@@ -1,3 +1,15 @@
 streamlit
 requests
 python-dotenv
+ollama
+python-dotenv
+python-multipart
+pypdf 
+openpyxl 
+unstructured
+pdfplumber 
+docx2txt 
+langchain 
+langchain-core
+langchain-community
+langchain-ollama
