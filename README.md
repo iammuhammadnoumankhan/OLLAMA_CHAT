@@ -32,7 +32,7 @@ cd OLLAMA_CHAT
 ```
 
 ### Sample Image
-![Chat Interface](samples/sample1.png)
+![Chat Interface](samples/sample.png)
 
 2. **Set up backend**
 ```bash
